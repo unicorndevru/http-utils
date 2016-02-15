@@ -26,6 +26,7 @@ resolvers ++= Seq(
 )
 
 val commons = Seq(
+  organization := "ru.unicorndev",
   scalaVersion := "2.11.7",
   resolvers ++= Seq(
     "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/",
