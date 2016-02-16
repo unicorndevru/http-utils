@@ -38,7 +38,7 @@ val commons = Seq(
   licenses +=("MIT", url("http://opensource.org/licenses/MIT")),
   bintrayPackageLabels := Seq("scala", "akka-http", "auth", "security", "api"),
   bintrayRepository := "generic",
-  version := "0.1." + gitHeadCommitSha.value
+  version := "0.2." + gitHeadCommitSha.value
 ) ++ commonScalariform
 
 commons

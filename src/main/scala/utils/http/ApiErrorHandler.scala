@@ -3,6 +3,7 @@ package utils.http
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.{ Directives, ExceptionHandler }
 import play.api.libs.json.{ Json, Writes }
+import utils.http.json.PlayJsonSupport
 import utils.http.protocol.{ ApiError, ValidationError }
 
 object ApiErrorHandler extends PlayJsonSupport {
