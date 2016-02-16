@@ -4,9 +4,14 @@ import play.api.data.validation.{ ValidationError ⇒ JsonError }
 import play.api.libs.json.JsPath
 
 import scala.collection.Seq
+import scala.util.control.NoStackTrace
 
-class ApiError(val code: String, val desc: String, val statusCode: Int = 500) extends Throwable {
+class ApiError(val code: String, val desc: String, val statusCode: Int = 500) extends Throwable with NoStackTrace {
   def forField(name: String) = new ValidationError(fields = Map(name → this), statusCode = if (statusCode == 500) 400 else statusCode)
+}
+
+object ApiError {
+  case object MalformedDataError extends ApiError("error.malformedData", "Malformed Data", 400)
 }
 
 class ValidationError(code: String = "validation.error", desc: String = "Validation Error", val fields: Map[String, ApiError] = Map.empty, statusCode: Int = 400) extends ApiError(code, desc, statusCode) {

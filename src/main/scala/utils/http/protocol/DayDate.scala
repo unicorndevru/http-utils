@@ -1,6 +1,6 @@
 package utils.http.protocol
 
-import akka.http.scaladsl.unmarshalling.Unmarshaller
+import akka.http.scaladsl.unmarshalling.{ FromStringUnmarshaller, Unmarshaller }
 import org.joda.time.DateTime
 
 import scala.concurrent.Future
@@ -25,5 +25,6 @@ object DayDate {
 
   implicit def fromJoda(dt: DateTime): DayDate = DayDate(year = dt.getYear, month = dt.getMonthOfYear, day = dt.getDayOfMonth)
 
-  implicit val unmarshaller = Unmarshaller[String, Option[DayDate]](e => input => Future.successful(read(input)))
+  implicit val unmarshaller: FromStringUnmarshaller[DayDate] =
+    Unmarshaller[String, DayDate](e ⇒ input ⇒ read(input).fold[Future[DayDate]](Future.failed(ApiError.MalformedDataError))(Future.successful))
 }
