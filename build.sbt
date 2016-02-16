@@ -49,7 +49,9 @@ lazy val `utils-http` = (project in file(".")).settings(commons: _*).settings(
   libraryDependencies ++= Seq(
     "com.typesafe.play" %% "play-json" % "2.4.6",
     "com.typesafe.akka" %% "akka-stream-experimental" % akkaHttpV,
-    "com.typesafe.akka" %% "akka-http-experimental" % akkaHttpV
+    "com.typesafe.akka" %% "akka-http-experimental" % akkaHttpV,
+    "com.typesafe.akka" %% "akka-http-testkit-experimental" % akkaHttpV,
+    "org.scalatest" %% "scalatest" % "2.2.5"
   )
 )
 
