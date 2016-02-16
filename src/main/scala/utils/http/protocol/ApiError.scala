@@ -6,7 +6,7 @@ import play.api.libs.json.JsPath
 import scala.collection.Seq
 import scala.util.control.NoStackTrace
 
-class ApiError(val code: String, val desc: String, val statusCode: Int = 500) extends Throwable with NoStackTrace {
+class ApiError(val code: String, val desc: String, val statusCode: Int = 500) extends RuntimeException(desc) with NoStackTrace {
   def forField(name: String) = new ValidationError(fields = Map(name → this), statusCode = if (statusCode == 500) 400 else statusCode)
 }
 
