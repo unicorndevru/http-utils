@@ -43,13 +43,16 @@ object FilterBounds {
         val left = sleft.trim()
         val right = sright.drop(1).trim
         val u = implicitly[Unmarshaller[String, T]]
-        for {
+        (for {
           lo ← if (left.nonEmpty) u(left).map(Some(_)) else Future.successful(None)
           ro ← if (right.nonEmpty) u(right).map(Some(_)) else Future.successful(None)
         } yield FilterBounds[T](
           left = lo.map(l ⇒ FilterBound[T](edge = l, strict = leftStrict > 0)),
           right = ro.map(r ⇒ FilterBound[T](edge = r, strict = rightStrict > 0))
-        )
+        )).flatMap {
+          case FilterBounds(None, None) => Future.failed(ApiError.MalformedDataError)
+          case result => Future.successful(result)
+        }
       }
     }
   }
