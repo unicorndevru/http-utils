@@ -2,6 +2,8 @@ package utils.http.json
 
 import akka.http.scaladsl.marshalling._
 import akka.http.scaladsl.model.{ HttpEntity, MessageEntity, HttpCharsets, MediaTypes }
+import akka.http.scaladsl.server.Directives._
+import akka.http.scaladsl.server._
 import akka.http.scaladsl.unmarshalling._
 import play.api.libs.json._
 import utils.http.protocol.ValidationError
@@ -16,6 +18,8 @@ trait PlayJsonSupport {
   val defaultPrinter: JsValue ⇒ String = Json.prettyPrint
 
   def onJsonMarshalling(json: JsValue)(implicit ec: ExecutionContext, ctx: JsonMarshallingContext): Future[JsValue] = Future.successful(json)
+
+  def extractJsonMarshallingContext: Directive1[JsonMarshallingContext] = provide(null)
 
   implicit def playJsonUnmarshallerConverter[A](reads: Reads[A]): FromEntityUnmarshaller[A] =
     playJsonUnmarshaller(reads)
