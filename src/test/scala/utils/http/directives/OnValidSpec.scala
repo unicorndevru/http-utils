@@ -1,10 +1,8 @@
 package utils.http.directives
 
-import akka.http.scaladsl.server.{Route, Directives}
+import akka.http.scaladsl.server.{Directives, Route}
 import akka.http.scaladsl.testkit.ScalatestRouteTest
-import org.scalatest.{WordSpec, Matchers, Inside}
-import play.api.data.validation.ValidationError
-import play.api.libs.json.{Json, JsValue}
+import org.scalatest.{Inside, Matchers, WordSpec}
 import utils.http.ApiErrorHandler
 import utils.http.protocol.ApiError
 
