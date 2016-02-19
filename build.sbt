@@ -5,7 +5,7 @@ import scalariform.formatter.preferences._
 
 scalaVersion := "2.11.7"
 
-val akkaHttpV = "2.0.2"
+val akkaV = "2.4.2"
 
 val gitHeadCommitSha = settingKey[String]("current git commit SHA")
 
@@ -48,9 +48,9 @@ lazy val `utils-http` = (project in file(".")).settings(commons: _*).settings(
   name := "utils-http",
   libraryDependencies ++= Seq(
     "com.typesafe.play" %% "play-json" % "2.4.6",
-    "com.typesafe.akka" %% "akka-stream-experimental" % akkaHttpV,
-    "com.typesafe.akka" %% "akka-http-experimental" % akkaHttpV,
-    "com.typesafe.akka" %% "akka-http-testkit-experimental" % akkaHttpV,
+    "com.typesafe.akka" %% "akka-stream" % akkaV,
+    "com.typesafe.akka" %% "akka-http-experimental" % akkaV,
+    "com.typesafe.akka" %% "akka-http-testkit" % akkaV,
     "org.scalatest" %% "scalatest" % "2.2.5"
   )
 )

@@ -15,7 +15,7 @@ object PlayJsonSupport extends PlayJsonSupport
 
 trait PlayJsonSupport {
 
-  val defaultPrinter: JsValue ⇒ String = Json.prettyPrint
+  def defaultPrinter: JsValue ⇒ String = Json.stringify
 
   def onJsonMarshalling(json: JsValue)(implicit ec: ExecutionContext, ctx: JsonMarshallingContext): Future[JsValue] = Future.successful(json)
 
