@@ -12,6 +12,7 @@ class ApiError(val code: String, val desc: String, val statusCode: Int = 500) ex
 
 object ApiError {
   case object MalformedDataError extends ApiError("error.malformedData", "Malformed Data", 400)
+  case object AuthorizationFailedError extends ApiError("error.authorizationFailed", "Authorization Failed", 403)
 }
 
 class ValidationError(code: String = "validation.error", desc: String = "Validation Error", val fields: Map[String, ApiError] = Map.empty, statusCode: Int = 400) extends ApiError(code, desc, statusCode) {
