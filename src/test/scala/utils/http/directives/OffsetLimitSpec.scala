@@ -6,7 +6,7 @@ import org.scalatest.{ Inside, Matchers, WordSpec }
 
 class OffsetLimitSpec extends WordSpec with Matchers with Directives with ScalatestRouteTest with OffsetLimitDirectives with Inside {
 
-  "Th OffsetLimit directive" should {
+  "Thу OffsetLimit directive" should {
     "Use default values correctly" in {
       Get("/abc") ~>
         { offsetLimit() { (x, y) ⇒ complete(s"$x, $y") } } ~>
@@ -28,7 +28,7 @@ class OffsetLimitSpec extends WordSpec with Matchers with Directives with Scalat
         check { responseAs[String] shouldEqual "0, 5" }
     }
 
-    "Doesn't parse incorrect values" in {
+    "not parse incorrect values" in {
       Get("/abc?limit=aa&offset=cc") ~>
         { offsetLimit() { (x, y) ⇒ complete(s"$x, $y") } } ~>
         check {
