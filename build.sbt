@@ -3,9 +3,9 @@ import sbt.Keys._
 
 import scalariform.formatter.preferences._
 
-scalaVersion := "2.11.7"
+scalaVersion := "2.11.8"
 
-val akkaV = "2.4.2"
+val akkaV = "2.4.3"
 
 val gitHeadCommitSha = settingKey[String]("current git commit SHA")
 
@@ -27,7 +27,7 @@ resolvers ++= Seq(
 
 val commons = Seq(
   organization := "ru.unicorndev",
-  scalaVersion := "2.11.7",
+  scalaVersion := "2.11.8",
   resolvers ++= Seq(
     "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/",
     "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases",
