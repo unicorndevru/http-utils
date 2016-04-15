@@ -5,7 +5,7 @@ import scalariform.formatter.preferences._
 
 scalaVersion := "2.11.8"
 
-val akkaV = "2.4.3"
+val akkaV = "2.4.4"
 
 val gitHeadCommitSha = settingKey[String]("current git commit SHA")
 
