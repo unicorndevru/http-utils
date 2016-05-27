@@ -28,10 +28,6 @@ object ApiErrorHandler extends PlayJsonSupport {
       val err = ValidationError.playJson(e.errors)
       complete(StatusCodes.custom(err.statusCode, err.desc) → Json.toJson(err)(validationErrorEncoder))
 
-    case r ⇒
-      println(r)
-      complete(StatusCodes.InternalServerError → "shit")
-
     case AuthorizationFailedRejection ⇒
       val e = AuthorizationFailedError
       complete(StatusCodes.custom(e.statusCode, e.desc) → Json.toJson(e))
