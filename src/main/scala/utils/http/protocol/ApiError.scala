@@ -20,12 +20,11 @@ class ValidationError(code: String = "validation.error", desc: String = "Validat
 }
 
 object ValidationError extends ValidationError("validation.error", "Validation Error", Map.empty, 400) {
-  def playJson(errors: Seq[(JsPath, Seq[JsonError])]): Throwable =
-    new ApiError("internal.json", "Internal Json", 500) {
-      override def getCause = errors.map {
-        case (path, error) ⇒
-          new ApiError("validation.json", error.flatMap(_.messages).mkString(";"), 400)
-            .forField(path.toString().stripPrefix("/").replace('/', '.'))
-      }.reduceLeftOption(_ combine _).getOrElse(ValidationError)
-    }
+  def playJson(errors: Seq[(JsPath, Seq[JsonError])]): ValidationError =
+    errors.map {
+      case (path, error) ⇒
+        new ApiError("validation.json", error.flatMap(_.messages).mkString(";"), 400)
+          .forField(path.toString().stripPrefix("/").replace('/', '.'))
+    }.reduceLeftOption(_ combine _).getOrElse(ValidationError)
+
 }

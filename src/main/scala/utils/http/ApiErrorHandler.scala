@@ -2,7 +2,7 @@ package utils.http
 
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server._
-import play.api.libs.json.{ Json, Writes }
+import play.api.libs.json.{ JsResultException, Json, Writes }
 import utils.http.json.PlayJsonSupport
 import utils.http.protocol.ApiError.AuthorizationFailedError
 import utils.http.protocol.{ ApiError, ValidationError }
@@ -24,8 +24,13 @@ object ApiErrorHandler extends PlayJsonSupport {
   }
 
   implicit val rejectionHandler: RejectionHandler = RejectionHandler.newBuilder().handle {
-    case MalformedRequestContentRejection(msg, Some(e: ValidationError)) ⇒
-      complete(StatusCodes.custom(e.statusCode, e.desc) → Json.toJson(e)(validationErrorEncoder))
+    case MalformedRequestContentRejection(msg, e: JsResultException) ⇒
+      val err = ValidationError.playJson(e.errors)
+      complete(StatusCodes.custom(err.statusCode, err.desc) → Json.toJson(err)(validationErrorEncoder))
+
+    case r ⇒
+      println(r)
+      complete(StatusCodes.InternalServerError → "shit")
 
     case AuthorizationFailedRejection ⇒
       val e = AuthorizationFailedError
