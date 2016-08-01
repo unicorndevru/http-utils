@@ -1,5 +1,7 @@
 package utils.http.protocol
 
+import java.time.{ Instant, ZoneId, ZoneOffset, ZonedDateTime }
+
 import akka.http.scaladsl.unmarshalling.{ FromStringUnmarshaller, Unmarshaller }
 import org.joda.time.DateTime
 
@@ -24,6 +26,13 @@ object DayDate {
   implicit def toJoda(dd: DayDate): DateTime = new DateTime(dd.year, dd.month, dd.day, 0, 0)
 
   implicit def fromJoda(dt: DateTime): DayDate = DayDate(year = dt.getYear, month = dt.getMonthOfYear, day = dt.getDayOfMonth)
+
+  implicit def toInstant(dd: DayDate)(implicit zoneId: ZoneId = ZoneOffset.UTC): Instant = ZonedDateTime.of(dd.year, dd.month, dd.day, 0, 0, 0, 0, zoneId).toInstant
+
+  implicit def fromInstant(i: Instant)(implicit zoneId: ZoneId = ZoneOffset.UTC): DayDate = {
+    val z = i.atZone(zoneId)
+    DayDate(year = z.getYear, month = z.getMonth.getValue, day = z.getDayOfMonth)
+  }
 
   implicit val unmarshaller: FromStringUnmarshaller[DayDate] =
     Unmarshaller[String, DayDate](e ⇒ input ⇒ read(input).fold[Future[DayDate]](Future.failed(ApiError.MalformedDataError))(Future.successful))
