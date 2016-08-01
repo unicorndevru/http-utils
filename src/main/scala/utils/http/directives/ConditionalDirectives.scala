@@ -23,7 +23,7 @@ trait ConditionalDirectives {
     userStringIdAware.flatMap {
       uao ⇒
         val tag = uao.getOrElse(zeroUUID)
-        conditional(EntityTag(tag + lm.lastUpdated.getMillis), DateTime(lm.lastUpdated.getMillis)).tflatMap(_ ⇒
+        conditional(EntityTag(tag + lm.lastUpdated.toEpochMilli), DateTime(lm.lastUpdated.toEpochMilli)).tflatMap(_ ⇒
           if (mustRevalidate) forceRevalidate else pass)
     }
 

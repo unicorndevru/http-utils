@@ -1,7 +1,7 @@
 package utils.http.protocol
 
-import org.joda.time.DateTime
+import java.time.Instant
 
 trait LastUpdated {
-  def lastUpdated: DateTime
+  def lastUpdated: Instant
 }
