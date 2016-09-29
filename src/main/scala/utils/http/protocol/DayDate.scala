@@ -1,6 +1,6 @@
 package utils.http.protocol
 
-import java.time.{ Instant, ZoneId, ZoneOffset, ZonedDateTime }
+import java.time._
 
 import akka.http.scaladsl.unmarshalling.{ FromStringUnmarshaller, Unmarshaller }
 import org.joda.time.DateTime
@@ -9,10 +9,12 @@ import scala.concurrent.Future
 import scala.language.implicitConversions
 import scala.util.Try
 
+@deprecated("Use LocalDate instead", "29.09.2016")
 case class DayDate(day: Int, month: Int, year: Int) {
   override def toString: String = s"$year-${if (month < 10) "0" + month else month}-${if (day < 10) "0" + day else day}"
 }
 
+@deprecated("Use LocalDate instead", "29.09.2016")
 object DayDate {
   val dateR = "([12][09][0-9][0-9])-([0-9][0-9])-([0-9][0-9])".r
 
